@@ -1,0 +1,13 @@
+{
+  "cSpell.words": [
+    "cnpj",
+    "oidc",
+    "typeorm",
+    "Typeorm",
+    "usecase"
+  ],
+  "editor.tabSize": 2,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+  },
+}
