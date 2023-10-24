@@ -1,7 +1,3 @@
 export interface UpdateObjectRepository {
-  update: (
-    object: any,
-    organizationId?: string,
-    companyId?: string
-  ) => Promise<any>
+  update: (object: any, userId?: string) => Promise<any>
 }

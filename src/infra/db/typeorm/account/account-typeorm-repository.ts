@@ -28,4 +28,14 @@ export class AccountTypeormRepository
     }
     return typeormHelper.mapAccount(account)
   }
+
+  async getAccount(
+    id: string,
+    address: boolean = false
+  ): Promise<AccountModel> {
+    const data = await this.connect.findOne({
+      where: { id }
+    })
+    return typeormHelper.mapAccount(data)
+  }
 }

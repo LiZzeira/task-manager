@@ -5,7 +5,7 @@ export interface ListPagerDataRepository {
   list: (
     search?: string,
     page?: number,
-    limit?: number,
+    limit?: number | 'all',
     orderBy?: string,
     desc?: boolean,
     filterColumns?: FilterColumns,

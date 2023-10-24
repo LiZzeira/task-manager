@@ -6,3 +6,7 @@ export interface GetAccountByEmail {
     showPasswd?: boolean
   ) => Promise<AccountModel | null>
 }
+
+export interface GetAccountByToken {
+  verifyToken: (token: string) => Promise<AccountModel | undefined>
+}

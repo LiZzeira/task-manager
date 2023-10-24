@@ -3,8 +3,7 @@ import { DeleteCounts } from '../../../../domain/models/delete-count/delete-coun
 export interface DeleteObjectRepository {
   delete: (
     id: string,
-    organizationId?: string,
-    companyId?: string,
+    userId?: string,
     relations?: Record<string, any>
   ) => Promise<DeleteCounts>
 }

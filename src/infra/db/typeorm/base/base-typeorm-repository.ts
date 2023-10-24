@@ -4,8 +4,20 @@ import { PagerData } from '../../../../domain/models/list-pager/list-pager-data'
 import { typeormHelper } from './helper'
 import { mergeObjects } from './mergeObjects'
 import { DeleteCounts } from '../../../../domain/models/delete-count/delete-count'
+import { AddObjectRepository } from '../../../../data/protocols/db/base/add-object-repository'
+import { UpdateObjectRepository } from '../../../../data/protocols/db/base/update-object-repository'
+import { FindOneObjectRepository } from '../../../../data/protocols/db/base/find-one-object-repository'
+import { ListPagerDataRepository } from '../../../../data/protocols/db/base/list-object-repository'
+import { DeleteObjectRepository } from '../../../../data/protocols/db/base/delete-object-repository'
 
-export class BaseTypeormRepository<T extends ObjectLiteral> {
+export class BaseTypeormRepository<T extends ObjectLiteral>
+  implements
+    AddObjectRepository,
+    UpdateObjectRepository,
+    FindOneObjectRepository,
+    ListPagerDataRepository,
+    DeleteObjectRepository
+{
   connect: Repository<T>
 
   async add(object: any): Promise<any> {
@@ -13,12 +25,34 @@ export class BaseTypeormRepository<T extends ObjectLiteral> {
     return typeormHelper.map(data)
   }
 
-  async update(object: any): Promise<any> {
-    await this.connect.update(object.id, object)
+  async update(object: any, userId?: string): Promise<any> {
+    const where: any = {
+      id: object.id,
+      ...(userId ? { user: { id: userId } } : {})
+    }
     const data = await this.connect.findOne({
-      where: {
-        id: object.id
-      }
+      where
+    })
+
+    if (!data) {
+      return null
+    }
+
+    await this.connect.update(object.id, object)
+
+    const result = await this.connect.findOne({
+      where
+    })
+
+    return typeormHelper.map(result)
+  }
+
+  async findById(id: string, userId?: string, relations?: any): Promise<any> {
+    const where: any = { id, ...(userId ? { user: { id: userId } } : {}) }
+
+    const data = await this.connect.findOne({
+      where,
+      ...(relations && { relations })
     })
     return typeormHelper.map(data)
   }
@@ -118,46 +152,9 @@ export class BaseTypeormRepository<T extends ObjectLiteral> {
     } as any
   }
 
-  async deleteRange(
-    items: any[] | 'ALL',
-    organizationId?: string,
-    companyId?: string,
-    relations?: Record<string, any>
-  ): Promise<DeleteCounts> {
-    let where: any = {}
-
-    if (organizationId && organizationId !== '') {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      where = { organization: { id: organizationId } }
-    }
-
-    if (companyId && companyId !== '') {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      where = { ...where, company: { id: companyId } }
-    }
-
-    if (items === 'ALL') {
-      items = await this.connect.find({
-        ...(where && { where }),
-        ...(relations && { relations })
-      })
-    }
-
-    const allPromises: Promise<any>[] = []
-
-    items.forEach((i: any) => {
-      allPromises.push(
-        this.connect.findOneOrFail({
-          where: { ...where, id: i.id },
-          ...(relations && { relations })
-        })
-      )
-    })
-
-    const result = await Promise.all(allPromises)
-
-    const data = await this.connect.softRemove(result)
-
-    return { deleteCount: data.length ?? 0 }
+  async delete(id: string, userId?: string): Promise<DeleteCounts> {
+    const where: any = { id, ...(userId ? { user: { id: userId } } : {}) }
+    const data = await this.connect.softDelete(where)
+    return { deleteCount: data.affected ?? 0 }
   }
 }

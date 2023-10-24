@@ -1,8 +1,3 @@
 export interface FindOneObjectRepository {
-  findById: (
-    id: string,
-    organizationId?: string,
-    companyId?: string,
-    relations?: any
-  ) => Promise<any>
+  findById: (id: string, userId?: string, relations?: any) => Promise<any>
 }

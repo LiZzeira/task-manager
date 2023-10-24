@@ -284,6 +284,1082 @@
           }
         }
       }
+    },
+
+    "/api/user": {
+      "post": {
+        "summary": "Endpoint para retornar os dados do usuário",
+        "description": "Retorna os dados do usuario com base no token",
+        "tags": ["Autenticação"],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Autenticação bem-sucedida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID do usuário",
+                      "example": "12345"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nome do usuário",
+                      "example": "Nome do Usuário"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Email do usuário",
+                      "example": "usuario@example.com"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token de acesso",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data e hora de criação do usuário",
+                      "example": "2023-10-23T12:34:56Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data e hora da última atualização do usuário",
+                      "example": "2023-10-23T12:34:56Z"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data e hora de exclusão do usuário (se aplicável)",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+
+    "/api/task": {
+      "post": {
+        "summary": "Endpoint para criar uma nova tarefa",
+        "description": "Cria uma nova tarefa e retorna informações sobre ela.",
+        "tags": ["Tarefas"],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Nome da tarefa",
+                    "example": "Tarefa 1"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Descrição da tarefa",
+                    "example": "Esta é a descrição da tarefa 1"
+                  },
+                  "progress": {
+                    "type": "number",
+                    "description": "Progresso da tarefa (0-100)",
+                    "example": 50
+                  },
+                  "isCompleted": {
+                    "type": "boolean",
+                    "description": "Indica se a tarefa está concluída",
+                    "example": false
+                  }
+                },
+                "required": ["name", "progress", "isCompleted"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tarefa criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID da tarefa",
+                      "example": "12345"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nome da tarefa",
+                      "example": "Tarefa 1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Descrição da tarefa",
+                      "example": "Esta é a descrição da tarefa 1"
+                    },
+                    "progress": {
+                      "type": "number",
+                      "description": "Progresso da tarefa (0-100)",
+                      "example": 50
+                    },
+                    "isCompleted": {
+                      "type": "boolean",
+                      "description": "Indica se a tarefa está concluída",
+                      "example": false
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data de criação da conta."
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data da última atualização da conta."
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data em que a conta foi excluída (se aplicável)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Endpoint para atualizar uma nova tarefa",
+        "description": "Atualizar uma nova tarefa e retorna informações sobre ela.",
+        "tags": ["Tarefas"],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "description": "id da tarefa",
+                    "example": "123456"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Nome da tarefa",
+                    "example": "Tarefa 1"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Descrição da tarefa",
+                    "example": "Esta é a descrição da tarefa 1"
+                  },
+                  "progress": {
+                    "type": "number",
+                    "description": "Progresso da tarefa (0-100)",
+                    "example": 50
+                  },
+                  "isCompleted": {
+                    "type": "boolean",
+                    "description": "Indica se a tarefa está concluída",
+                    "example": false
+                  }
+                },
+                "required": ["id", "name", "progress", "isCompleted"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Tarefa criada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID da tarefa",
+                      "example": "12345"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nome da tarefa",
+                      "example": "Tarefa 1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Descrição da tarefa",
+                      "example": "Esta é a descrição da tarefa 1"
+                    },
+                    "progress": {
+                      "type": "number",
+                      "description": "Progresso da tarefa (0-100)",
+                      "example": 50
+                    },
+                    "isCompleted": {
+                      "type": "boolean",
+                      "description": "Indica se a tarefa está concluída",
+                      "example": false
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data de criação da conta."
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data da última atualização da conta."
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data em que a conta foi excluída (se aplicável)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tarefa não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Tarefa não encontrada."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Endpoint para buscar tarefas",
+        "description": "Recupera uma lista de tarefas com base em filtros e opções de ordenação.",
+        "tags": ["Tarefas"],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "Termo de pesquisa para filtrar tarefas por nome ou descrição.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Número da página a ser recuperada.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 1
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Número máximo de tarefas a serem retornadas por página.",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "example": 10
+            }
+          },
+          {
+            "name": "orderBy",
+            "in": "query",
+            "description": "Campo pelo qual as tarefas devem ser ordenadas.",
+            "schema": {
+              "type": "string",
+              "enum": ["name", "progress", "createdAt"],
+              "example": "name"
+            }
+          },
+          {
+            "name": "desc",
+            "in": "query",
+            "description": "Ordenar em ordem decrescente (true) ou crescente (false).",
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
+          },
+          {
+            "name": "filterColumns",
+            "in": "query",
+            "description": "Filtro por colunas",
+            "schema": {
+              "type": "object"
+              
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de tarefas recuperada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "ID da tarefa",
+                            "example": "12345"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Nome da tarefa",
+                            "example": "Tarefa 1"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "Descrição da tarefa",
+                            "example": "Esta é a descrição da tarefa 1"
+                          },
+                          "progress": {
+                            "type": "number",
+                            "description": "Progresso da tarefa (0-100)",
+                            "example": 50
+                          },
+                          "isCompleted": {
+                            "type": "boolean",
+                            "description": "Indica se a tarefa está concluída",
+                            "example": false
+                          },
+                          "createdAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data de criação da conta."
+                          },
+                          "updatedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data da última atualização da conta."
+                          },
+                          "deletedAt": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "Data em que a conta foi excluída (se aplicável)."
+                          }
+                        }
+                      }
+                    },
+                    "page": {
+                      "type": "int32",
+                      "description": "Pagina atual",
+                      "example": 0
+                    },
+                    "limit": {
+                      "type": "int32",
+                      "description": "Limite de itens por request",
+                      "example": 10
+                    },
+                    "length": {
+                      "type": "int32",
+                      "description": "quantidade total de itens",
+                      "example": 100
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      } 
+    },
+    "/api/task/{idTask}": {
+      "get": {
+        "summary": "Endpoint para obter os detalhes de uma tarefa",
+        "description": "Obtém os detalhes de uma tarefa com base no ID da tarefa fornecido.",
+        "tags": ["Tarefas"],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "parameters": [
+          {
+            "name": "idTask",
+            "in": "path",
+            "required": true,
+            "description": "ID da tarefa",
+            "schema": {
+              "type": "string",
+              "example": "12345"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da tarefa recuperados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID da tarefa",
+                      "example": "12345"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nome da tarefa",
+                      "example": "Tarefa 1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Descrição da tarefa",
+                      "example": "Esta é a descrição da tarefa 1"
+                    },
+                    "progress": {
+                      "type": "number",
+                      "description": "Progresso da tarefa (0-100)",
+                      "example": 50
+                    },
+                    "isCompleted": {
+                      "type": "boolean",
+                      "description": "Indica se a tarefa está concluída",
+                      "example": false
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data de criação da conta."
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data da última atualização da conta."
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data em que a conta foi excluída (se aplicável)."
+                    }
+                  }
+                }
+              }
+            }
+          },         
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tarefa não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Tarefa não encontrada."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Endpoint para completar uma tarefa",
+        "description": "completa uma tarefa com base no ID da tarefa fornecido.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "idTask",
+            "in": "path",
+            "required": true,
+            "description": "ID da tarefa",
+            "schema": {
+              "type": "string",
+              "example": "12345"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da tarefa recuperados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID da tarefa",
+                      "example": "12345"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nome da tarefa",
+                      "example": "Tarefa 1"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Descrição da tarefa",
+                      "example": "Esta é a descrição da tarefa 1"
+                    },
+                    "progress": {
+                      "type": "number",
+                      "description": "Progresso da tarefa (0-100)",
+                      "example": 50
+                    },
+                    "isCompleted": {
+                      "type": "boolean",
+                      "description": "Indica se a tarefa está concluída",
+                      "example": false
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data de criação da conta."
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data da última atualização da conta."
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data em que a conta foi excluída (se aplicável)."
+                    }
+                  }
+                }
+              }
+            }
+          },         
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Tarefa não encontrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Tarefa não encontrada."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Endpoint para apagar uma tarefa",
+        "description": "Apagar uma tarefa com base no ID da tarefa fornecido.",
+        "tags": ["Tarefas"],
+        "parameters": [
+          {
+            "name": "idTask",
+            "in": "path",
+            "required": true,
+            "description": "ID da tarefa",
+            "schema": {
+              "type": "string",
+              "example": "12345"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Tarefa apagada com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "deleteCount": {
+                      "type": "number",
+                      "description": "Tarefas apagadas",
+                      "example": 1
+                    }
+                  }
+                }
+              }
+            }
+          },         
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header",
+        "description": "Token de autenticação no formato 'Bearer [token]'"
+      }
     }
   }
 }
