@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Minha API",
-    "description": "Descrição da minha API"
+    "title": "API Task",
+    "description": "Consulte o README.md na raiz do projeto para mais informações"
   },
   "servers": [
     {
