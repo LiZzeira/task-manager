@@ -33,10 +33,11 @@
         }
       }
     },
-    "/login": {
+    "/api/login": {
       "post": {
         "summary": "Rota de login do usuário",
         "description": "Autentique um usuário fornecendo e-mail e senha.",
+        "tags": ["Autenticação"],
         "requestBody": {
           "required": true,
           "content": {
@@ -98,6 +99,183 @@
                       "type": "string",
                       "format": "date-time",
                       "description": "Data em que a conta foi excluída (se aplicável)."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/register": {
+      "post": {
+        "summary": "Endpoint para criação de usuário",
+        "description": "Cria e autentica um usuário e retorna um objeto com informações do usuário e um token de acesso.",
+        "tags": ["Autenticação"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "description": "O email do usuário",
+                    "example": "usuario@example.com"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "O nome do usuário",
+                    "example": "Nome do Usuário"
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "A senha do usuário",
+                    "example": "senha123"
+                  },
+                  "passwordConfirmation": {
+                    "type": "string",
+                    "description": "Confirmação da senha do usuário",
+                    "example": "senha123"
+                  }
+                },
+                "required": ["email", "name", "password", "passwordConfirmation"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticação bem-sucedida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "ID do usuário",
+                      "example": "12345"
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Nome do usuário",
+                      "example": "Nome do Usuário"
+                    },
+                    "email": {
+                      "type": "string",
+                      "description": "Email do usuário",
+                      "example": "usuario@example.com"
+                    },
+                    "token": {
+                      "type": "string",
+                      "description": "Token de acesso",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data e hora de criação do usuário",
+                      "example": "2023-10-23T12:34:56Z"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data e hora da última atualização do usuário",
+                      "example": "2023-10-23T12:34:56Z"
+                    },
+                    "deletedAt": {
+                      "type": "string",
+                      "format": "date-time",
+                      "description": "Data e hora de exclusão do usuário (se aplicável)",
+                      "example": null
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requisição inválida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Os dados fornecidos são inválidos."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
                     }
                   }
                 }

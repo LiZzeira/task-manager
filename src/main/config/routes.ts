@@ -19,7 +19,7 @@ export default (app: Express): void => {
     res.status(200).send({ message: 'API ON' })
   })
 
-  // app.use('/api', router)
+  app.use('/api', router)
 
   fg.sync(
     env.production
