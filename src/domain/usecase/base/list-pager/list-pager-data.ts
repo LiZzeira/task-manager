@@ -1,8 +1,9 @@
+import { FindOptionsRelations, FindOptionsSelect } from 'typeorm'
 import { PagerData } from '../../../models/list-pager/list-pager-data'
 
 export type FilterColumns = Record<string, string | number | any[]>
 
-export interface ListPagerData {
+export interface ListPagerData<T> {
   list: (
     search?: string,
     page?: number,
@@ -11,7 +12,7 @@ export interface ListPagerData {
     desc?: boolean,
     filterColumns?: FilterColumns,
     fields?: any[],
-    relations?: any,
-    select?: any
+    relations?: FindOptionsRelations<T>,
+    select?: FindOptionsSelect<T>
   ) => Promise<PagerData>
 }

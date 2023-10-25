@@ -22,7 +22,8 @@ Para a autenticação de usuários externos em nossa API, foi adotado o JWT (JSO
 2. Execute `npm install` ou `yarn install` para instalar as dependências.
 3. Configure o banco de dados de acordo com suas necessidades no arquivo `src\main\config\env.ts`.
 4. Execute o servidor usando `npm run start` ou `yarn start`.
-
+5. Será mostrada no terminal onde esta rodando o projeto a url onde está rodando padrão: `http://localhost:3001`
+6. Abra essa url em seu navegador e acrecente o caminho `/docs` para ir ate o Swagger padrão: `http://localhost:3001/docs`
 
 ## explicações sobre dependencias
 

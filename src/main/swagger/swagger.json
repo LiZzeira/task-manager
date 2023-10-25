@@ -290,7 +290,7 @@
       "get": {
         "summary": "Endpoint para retornar os dados do usuário",
         "description": "Retorna os dados do usuario com base no token",
-        "tags": ["Autenticação"],
+        "tags": ["Usuários"],
         "security": [
           {
             "BearerAuth": 
@@ -390,6 +390,78 @@
             }
           },
 
+          "500": {
+            "description": "Erro interno no servidor",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Erro do Servidor Interno"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/token": {
+      "get": {
+        "summary": "Endpoint para atualizar token do usuário",
+        "description": "Retorna um novo token com base no token",
+        "tags": ["Usuários"],
+        "security": [
+          {
+            "BearerAuth": 
+              {
+                "type": "apiKey",
+                "name": "Authorization",
+                "in": "header",
+                "description": "Token de autenticação no formato 'Bearer [token]'"
+              }
+            
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Autenticação bem-sucedida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "token": {
+                      "type": "string",
+                      "description": "Token de acesso",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Nao autorizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string",
+                      "description": "Mensagem de erro",
+                      "example": "Não autorizado"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "500": {
             "description": "Erro interno no servidor",
             "content": {

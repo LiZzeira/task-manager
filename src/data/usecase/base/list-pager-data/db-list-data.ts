@@ -4,7 +4,7 @@ import {
 } from '../../../../domain/usecase/base/list-pager/list-pager-data'
 import { ListPagerDataRepository } from '../../../protocols/db/base/list-object-repository'
 
-export class DbListPagerData implements ListPagerData {
+export class DbListPagerData implements ListPagerData<any> {
   constructor(private readonly listPagerRepository: ListPagerDataRepository) {}
   async list(
     search?: string,

@@ -15,7 +15,7 @@ import { ListPagerData } from '../../../../domain/usecase/base/list-pager/list-p
 
 export class ListTaskController implements Controller {
   constructor(
-    private readonly listTask: ListPagerData,
+    private readonly listTask: ListPagerData<TaskEntity>,
     private readonly validation: Validation
   ) {}
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {

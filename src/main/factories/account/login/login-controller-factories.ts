@@ -16,7 +16,7 @@ export const makeAuthenticationAccountController = (): Controller => {
   const bcryptAdapter = new BcryptAdapter(env.salt)
   const jwtAdapter = new JwtAdapter()
 
-  // Authenticatin Account Controller
+  // Authentication Account Controller
   const dbAuthenticationAccount = new DbAuthentication(
     accountTypeormRepository,
     bcryptAdapter,
