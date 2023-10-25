@@ -1,4 +1,4 @@
-const Development = {
+const DevPostgres = {
   production: false,
   portHttp: process.env.PORT ?? 3001,
   jwtSecret: process.env.JWT_SECRET ?? 'JH!2=@ejal#@bk12',
@@ -12,13 +12,13 @@ const Development = {
   salt: 12
 }
 
-const docker = {
+const DevDocker = {
   production: false,
   docker: true,
   portHttp: process.env.PORT ?? 3001,
   jwtSecret: process.env.JWT_SECRET ?? 'JH!2=@ejal#@bk12',
   host: 'localhost',
-  DB_HOST: 'dabase',
+  DB_HOST: '',
   DB_PORT: 5432,
   DB_DATABASE: 'lbdatabase',
   DB_USER: 'postgres',
@@ -27,4 +27,4 @@ const docker = {
   salt: 12
 }
 
-export default docker
+export default DevDocker
