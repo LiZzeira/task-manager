@@ -4,26 +4,38 @@ Olá! Bem-vindo à documentação da minha API desenvolvida em Node.js, utilizan
 
 ## Configurações do Banco de Dados
 
-Utilizamos o TypeORM para atender às demandas de banco de dados. Atualmente, está configurado para usar o PostgreSQL, mas isso pode ser facilmente alterado se necessário. 
+1. Utilizando Postgres local.
+  Utilizamos o TypeORM para atender às demandas de banco de dados. Atualmente, está configurado para usar o PostgreSQL, mas isso pode ser facilmente alterado se necessário. 
 
-Para fazer alterações nas configurações do banco de dados (como host, nome do banco ou tipo de banco), você pode ir para o arquivo de configurações de ambiente em: 
+  Para fazer alterações nas configurações do banco de dados (como host, nome do banco ou tipo de banco), você pode ir para o arquivo de configurações de ambiente em: 
 
-src\main\config\env.ts
+  src\main\config\env.ts
+
+  ## Como Começar
+
+  1. Clone o repositório.
+  2. Execute `npm install` ou `yarn install` para instalar as dependências.
+  3. Configure o banco de dados de acordo com suas necessidades no arquivo `src\main\config\env.ts`.
+  4. Execute o servidor usando `npm run start` ou `yarn start`.
+  5. Será mostrada no terminal onde esta rodando o projeto a url onde está rodando padrão: `http://localhost:3001`
+  6. Abra essa url em seu navegador e acrecente o caminho `/docs` para ir ate o Swagger padrão: `http://localhost:3001/docs`
+
+
+2. Utilizando Docker
+  
+  Mantenha no arquivo `src\main\config\env.ts` o export da constante devDocker.
+
+  1. Clone o repositório.
+  2. Suba o Container use `docker-compose up`. para derrubar o container use `docker-compose down` 
+  3. Será mostrada no terminal onde esta rodando o projeto a url onde está rodando padrão: `http://localhost:3001`
+  4. Abra essa url em seu navegador e acrecente o caminho `/docs` para ir ate o Swagger padrão: `http://localhost:3001/docs`
+
 
 ## Autenticação e Segurança
 
 Para a autenticação de usuários externos em nossa API, foi adotado o JWT (JSON Web Token). Além disso, para garantir a segurança das senhas dos usuários, elas foram criptografadas utilizando o bcrypt.
 
 **Nota Importante:** As rotas de tarefas e consulta de usuário estão protegidas, garantindo que somente usuários autenticados possam acessá-las.
-
-## Como Começar
-
-1. Clone o repositório.
-2. Execute `npm install` ou `yarn install` para instalar as dependências.
-3. Configure o banco de dados de acordo com suas necessidades no arquivo `src\main\config\env.ts`.
-4. Execute o servidor usando `npm run start` ou `yarn start`.
-5. Será mostrada no terminal onde esta rodando o projeto a url onde está rodando padrão: `http://localhost:3001`
-6. Abra essa url em seu navegador e acrecente o caminho `/docs` para ir ate o Swagger padrão: `http://localhost:3001/docs`
 
 ## explicações sobre dependencias
 

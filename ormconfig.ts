@@ -4,11 +4,18 @@ import env from './src/main/config/env'
 
 export const AppDataSource = new DataSource({
   type: 'postgres',
-  host: env.DB_HOST,
-  port: env.DB_PORT,
-  username: env.DB_USER,
-  password: env.DB_PASSWORD,
-  database: env.DB_DATABASE,
+
+  ...(env.docker
+    ? {
+        url: env.DB_URL
+      }
+    : {
+        host: env.DB_HOST,
+        port: env.DB_PORT,
+        username: env.DB_USER,
+        password: env.DB_PASSWORD,
+        database: env.DB_DATABASE
+      }),
   logging: false,
   synchronize: false,
   subscribers: [
